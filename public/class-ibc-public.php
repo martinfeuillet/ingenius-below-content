@@ -28,7 +28,7 @@ class IBC_Public {
 		if (is_product_tag()) {
 			$term = get_queried_object();
 			$below_tag_content = htmlspecialchars_decode(get_term_meta($term->term_id, 'below_tag_content', true));
-			echo "<div class='below-tag-content' style='display:inline-block;'>" . $below_tag_content . "</div>";
+			echo "<div class='below-tag-content' style='display:inline-block; padding:1rem; border: 1px solid rgba(0,0,0,0.1)'>" . $below_tag_content . "</div>";
 		}
 	}
 }
