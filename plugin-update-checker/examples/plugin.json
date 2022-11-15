@@ -1,0 +1,19 @@
+{
+	"name": "Ingenius below content",
+	"version": "1.0.1",
+
+	"homepage": "https://ingenius.agency/",
+	"requires": "6.1",
+	"tested": "6.1",
+	"last_updated": "2022-11-15 16:17:00",
+	"upgrade_notice": "Here's why you should upgrade...",
+
+	"author": "Ingenius agency",
+	"author_homepage": "https://ingenius.agency/",
+
+	"sections": {
+		"description": "Plugin that include a below content on tag and attributes",
+		"installation": "Just install and activate the plugin",
+		"changelog": "Here's what's new in version 1.0"
+	}
+}

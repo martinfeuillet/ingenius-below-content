@@ -81,14 +81,12 @@ function run_IBC() {
 run_IBC();
 
 require 'plugin-update-checker/plugin-update-checker.php';
-
-use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
-
-$myUpdateChecker = PucFactory::buildUpdateChecker(
+$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 	'https://github.com/martinfeuillet/ingenius-below-content',
 	__FILE__,
 	'ingenius-below-content'
 );
+
 
 //Set the branch that contains the stable release.
 $myUpdateChecker->setBranch('master');
