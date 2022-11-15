@@ -2,17 +2,17 @@
 
 class IBC_Public {
 
-
 	private $IBC;
 
-
 	private $version;
+
+	private $test;
 
 	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $IBC       The name of the plugin.
+	 * @param      string    $IBC       The name of the plugin
 	 * @param      string    $version    The version of this plugin.
 	 */
 	public function __construct($IBC, $version) {
