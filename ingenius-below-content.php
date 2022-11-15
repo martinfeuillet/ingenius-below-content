@@ -85,10 +85,10 @@ require 'plugin-update-checker/plugin-update-checker.php';
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
 $myUpdateChecker = PucFactory::buildUpdateChecker(
-	'https://github.com/user-name/repo-name/',
+	'https://github.com/martinfeuillet/ingenius-below-content',
 	__FILE__,
-	'unique-plugin-or-theme-slug'
+	'ingenius-below-content'
 );
 
 //Set the branch that contains the stable release.
-$myUpdateChecker->setBranch('stable-branch-name');
+$myUpdateChecker->setBranch('master');
