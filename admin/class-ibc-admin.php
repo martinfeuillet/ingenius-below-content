@@ -21,9 +21,6 @@ class IBC_Admin {
 
 		// add_action('admin_init', array($this, 'add_plugin_page'));
 
-		// register metafield on product tag and product attributes
-		add_action('woocommerce_product_options_general_product_data', array($this, 'add_product_meta_fields'));
-
 		// add meta box on taxonomy single product tags at the end of the page
 		add_action('product_tag_edit_form_fields', array($this, 'add_product_tag_edit_meta_fields'), 10, 2);
 
