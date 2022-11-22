@@ -16,7 +16,7 @@
  * Plugin Name:       Ingenius Below Content
  * Plugin URI:        http://example.com/ibc-uri/
  * Description:       Ingenius plugin that allow below content on attributes and tags.
- * Version:           1.0.4
+ * Version:           1.0.5
  * Author:            Ingenius
  * Author URI:        https://ingenius.agency/
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if (!defined('WPINC')) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('IBC_VERSION', '1.0.4');
+define('IBC_VERSION', '1.0.5');
 
 /**
  * The code that runs during plugin activation.
@@ -54,6 +54,9 @@ function deactivate_IBC() {
 	require_once plugin_dir_path(__FILE__) . 'includes/class-ibc-deactivator.php';
 	IBC_Deactivator::deactivate();
 }
+
+// enqueue scripts and styles
+
 
 register_activation_hook(__FILE__, 'activate_IBC');
 register_deactivation_hook(__FILE__, 'deactivate_IBC');
