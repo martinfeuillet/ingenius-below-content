@@ -31,8 +31,8 @@ class IBC_Admin {
 		add_action('edit_term', array($this, 'save_metabox_on_product_tag_page'), 10, 3);
 		add_action('created_term', array($this, 'save_metabox_on_product_tag_page'), 10, 3);
 
-		add_action('edited_product_tag', 'tag_save_taxonomy_custom_meta', 10, 2);
-		add_action('create_product_tag', 'tag_save_taxonomy_custom_meta', 10, 2);
+		add_action('edited_product_tag', array($this, 'tag_save_taxonomy_custom_meta'), 10, 2);
+		add_action('create_product_tag', array($this, 'tag_save_taxonomy_custom_meta'), 10, 2);
 	}
 
 
