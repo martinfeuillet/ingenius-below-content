@@ -9,37 +9,14 @@ class IBC_Public {
         $this->IBC     = $IBC;
         $this->version = $version;
 
-        // add_action('woocommerce_after_single_product_summary', array($this, 'add_below_content'), 11);
         add_action('woocommerce_after_main_content', array($this, 'add_below_content'), 11);
+        add_action('the_post', array($this, 'set_variable_product_thumbnail'));
+
         add_filter('woocommerce_page_title', array($this, 'change_title_of_woocommerce_page'), 10, 1);
-
-        // add_action( 'pre_get_posts', array($this, 'display_custom_product_variation_image'));
-        add_action('the_post', array($this, 'set_variableX_product_thumbnail'));
     }
 
-    public function display_custom_product_variation_image($query) {
-        if (is_admin() || ! $query->is_main_query()) {
-            return;
-        }
-        $queried_object = get_queried_object();
-        $query->set('post_type', 'product');
-        $query->set('post_status', 'publish');
-        $query->set('posts_per_page', -1);
-        if (is_tax()) {
-            $query->set('tax_query', array(
-                array(
-                    'taxonomy' => $queried_object->taxonomy,
-                    'field'    => 'slug',
-                    'terms'    => $queried_object->slug,
-                ),
-            ));
-        }
-        // change post thumbnail of product
-
-        return $query;
-    }
-
-    public function set_variableX_product_thumbnail($post) {
+    // change thumbnail of variable product to match with the selected attribute
+    public function set_variable_product_thumbnail($post) {
         $queried_object = get_queried_object();
         if (is_admin() && ! is_tax() && ! substr($queried_object->taxonomy, 0, 3) == 'pa_') {
             return;
@@ -63,16 +40,6 @@ class IBC_Public {
         }
     }
 
-    public function set_variable_product_thumbnail($post_id) {
-        // Get the product variation ID
-        $variation_id = get_post_meta($post_id, '_default_variation_id', true);
-        // Get the product variation image
-        $image = wp_get_attachment_image($variation_id, 'thumbnail');
-
-        // Set the product variation image as the post thumbnail
-        set_post_thumbnail($post_id, $image);
-    }
-
     public function change_title_of_woocommerce_page($title) {
         $query = get_queried_object();
         if (is_tax()) {
@@ -87,6 +54,7 @@ class IBC_Public {
         }
     }
 
+    // add below content on tag and attribute archive
     public function add_below_content() {
         if (is_product_tag()) {
             $term              = get_queried_object();

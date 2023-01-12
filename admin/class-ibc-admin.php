@@ -1,25 +1,9 @@
 <?php
 
 class IBC_Admin {
-    private $IBC;
-
-    private $version;
-
-    /**
-     * Initialize the class and set its properties.
-     *
-     * @since    1.0.0
-     * @param      string    $IBC       The name of this plugin.
-     * @param      string    $version    The version of this plugin.
-     */
-    public function __construct($IBC, $version) {
-        $this->IBC     = $IBC;
-        $this->version = $version;
-
-        // add meta box on taxonomy single product tags at the end of the page
+    public function __construct() {
         add_action('product_tag_edit_form_fields', array($this, 'add_product_tag_edit_meta_fields'), 10, 2);
 
-        //  save meta box on taxonomy single product tags
         add_action('edit_term', array($this, 'save_metabox_on_product_tag_page'), 10, 3);
         add_action('created_term', array($this, 'save_metabox_on_product_tag_page'), 10, 3);
 
@@ -30,9 +14,9 @@ class IBC_Admin {
         add_action( 'edit_term', array($this, 'save_metabox_on_product_attr_page'), 10, 1);
     }
 
-    public function add_product_tag_edit_meta_fields($term) {
+    // add meta box on taxonomy single product tags at the end of the page
+    public function add_product_tag_edit_meta_fields(object $term) {
         $second_desc = htmlspecialchars_decode(get_term_meta($term->term_id, 'below_tag_content', true));
-
         ?>
 		<tr class="form-field">
 			<th scope="row" valign="top"><label for="below_tag_content"><?php echo __('below_tag_content', 'ibc'); ?></label></th>
@@ -54,7 +38,8 @@ class IBC_Admin {
 <?php
     }
 
-    public function add_custom_field_to_attr($term, $taxonomy) {
+    // add meta box on taxonomy single product attributes at the end of the page
+    public function add_custom_field_to_attr(object $term, $taxonomy) {
         $below_attr_content = htmlspecialchars_decode(get_term_meta($term->term_id, 'below_attr_content', true));
         $selected           = get_term_meta($term->term_id, 'prefix_suffixe', true);
         $attr_value         = htmlspecialchars_decode(get_term_meta($term->term_id, 'attr_value', true));
@@ -91,12 +76,14 @@ class IBC_Admin {
 <?php
     }
 
-    public function save_metabox_on_product_tag_page($term_id, $tt_id = '', $taxonomy = '') {
+    //  save meta box on taxonomy single product tags
+    public function save_metabox_on_product_tag_page(int $term_id, $tt_id = '', string $taxonomy = '') {
         if (isset($_POST['below_tag_content']) && 'product_tag' === $taxonomy) {
             update_term_meta($term_id, 'below_tag_content', esc_attr($_POST['below_tag_content']));
         }
     }
 
+    // save meta box on taxonomy single product attributes
     public function save_metabox_on_product_attr_page($term_id) {
         if (isset($_POST['below_attr_content'])) {
             update_term_meta($term_id, 'below_attr_content', esc_attr($_POST['below_attr_content']));
