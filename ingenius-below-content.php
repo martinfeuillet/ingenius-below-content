@@ -26,8 +26,8 @@
  */
 
 // If this file is called directly, abort.
-if (!defined('WPINC')) {
-	die;
+if ( ! defined('WPINC')) {
+    die;
 }
 
 /**
@@ -42,8 +42,8 @@ define('IBC_VERSION', '1.0.6');
  * This action is documented in includes/class-ibc-activator.php
  */
 function activate_IBC() {
-	require_once plugin_dir_path(__FILE__) . 'includes/class-ibc-activator.php';
-	IBC_Activator::activate();
+    require_once plugin_dir_path(__FILE__) . 'includes/class-ibc-activator.php';
+    IBC_Activator::activate();
 }
 
 /**
@@ -51,12 +51,11 @@ function activate_IBC() {
  * This action is documented in includes/class-ibc-deactivator.php
  */
 function deactivate_IBC() {
-	require_once plugin_dir_path(__FILE__) . 'includes/class-ibc-deactivator.php';
-	IBC_Deactivator::deactivate();
+    require_once plugin_dir_path(__FILE__) . 'includes/class-ibc-deactivator.php';
+    IBC_Deactivator::deactivate();
 }
 
 // enqueue scripts and styles
-
 
 register_activation_hook(__FILE__, 'activate_IBC');
 register_deactivation_hook(__FILE__, 'deactivate_IBC');
@@ -77,19 +76,17 @@ require plugin_dir_path(__FILE__) . 'includes/class-ibc.php';
  * @since    1.0.0
  */
 function run_IBC() {
-
-	$plugin = new IBC();
-	$plugin->run();
+    $plugin = new IBC();
+    $plugin->run();
 }
 run_IBC();
 
 require 'plugin-update-checker/plugin-update-checker.php';
 $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-	'https://github.com/martinfeuillet/ingenius-below-content',
-	__FILE__,
-	'ingenius-below-content'
+    'https://github.com/martinfeuillet/ingenius-below-content',
+    __FILE__,
+    'ingenius-below-content'
 );
-
 
 //Set the branch that contains the stable release.
 $myUpdateChecker->setBranch('master');

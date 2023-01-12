@@ -1,4 +1,4 @@
-.below-tag-content{
+.below-tag-content,.below-attr-content{
     display:inline-block; 
     width:100%;
     padding:1rem;

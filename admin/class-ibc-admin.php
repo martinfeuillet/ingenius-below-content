@@ -1,65 +1,111 @@
 <?php
 
 class IBC_Admin {
+    private $IBC;
 
+    private $version;
 
-	private $IBC;
+    /**
+     * Initialize the class and set its properties.
+     *
+     * @since    1.0.0
+     * @param      string    $IBC       The name of this plugin.
+     * @param      string    $version    The version of this plugin.
+     */
+    public function __construct($IBC, $version) {
+        $this->IBC     = $IBC;
+        $this->version = $version;
 
-	private $version;
+        // add meta box on taxonomy single product tags at the end of the page
+        add_action('product_tag_edit_form_fields', array($this, 'add_product_tag_edit_meta_fields'), 10, 2);
 
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.0.0
-	 * @param      string    $IBC       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
-	 */
-	public function __construct($IBC, $version) {
+        //  save meta box on taxonomy single product tags
+        add_action('edit_term', array($this, 'save_metabox_on_product_tag_page'), 10, 3);
+        add_action('created_term', array($this, 'save_metabox_on_product_tag_page'), 10, 3);
 
-		$this->IBC = $IBC;
-		$this->version = $version;
+        if ( is_admin() && isset( $_GET['taxonomy'], $_GET['post_type'] ) && $_GET['post_type'] === 'product' && substr($_GET['taxonomy'], 0, 2) === 'pa' ) {
+            $taxonomy_name = sanitize_text_field( $_GET['taxonomy'] );
+            add_action( $taxonomy_name . '_edit_form_fields', array($this, 'add_custom_field_to_attr'), 10, 2 );
+        }
+        add_action( 'edit_term', array($this, 'save_metabox_on_product_attr_page'), 10, 1);
+    }
 
-		// add_action('admin_init', array($this, 'add_plugin_page'));
+    public function add_product_tag_edit_meta_fields($term) {
+        $second_desc = htmlspecialchars_decode(get_term_meta($term->term_id, 'below_tag_content', true));
 
-		// add meta box on taxonomy single product tags at the end of the page
-		add_action('product_tag_edit_form_fields', array($this, 'add_product_tag_edit_meta_fields'), 10, 2);
-
-		//  save meta box on taxonomy single product tags
-		add_action('edit_term', array($this, 'save_metabox_on_product_tag_page'), 10, 3);
-		add_action('created_term', array($this, 'save_metabox_on_product_tag_page'), 10, 3);
-
-		// add_action('edited_product_tag', array($this, 'tag_save_taxonomy_custom_meta'), 10, 2);
-		// add_action('create_product_tag', array($this, 'tag_save_taxonomy_custom_meta'), 10, 2);
-	}
-
-
-	public function add_product_tag_edit_meta_fields($term) {
-		$second_desc = htmlspecialchars_decode(get_term_meta($term->term_id, 'below_tag_content', true));
-
-?>
+        ?>
 		<tr class="form-field">
 			<th scope="row" valign="top"><label for="below_tag_content"><?php echo __('below_tag_content', 'ibc'); ?></label></th>
 			<td>
 				<?php
 
-				$settings = array(
-					'textarea_name' => 'below_tag_content',
-					'value' => $second_desc,
-					'quicktags' => array('buttons' => 'em,strong,link'),
-					'tinymce' => true,
-					'editor_css' => '<style>#below_tag_content_ifr {height:250px !important;}</style>'
-				);
+                        $settings = array(
+                            'textarea_name' => 'below_tag_content',
+                            'value'         => $second_desc,
+                            'quicktags'     => array('buttons' => 'em,strong,link'),
+                            'tinymce'       => true,
+                            'editor_css'    => '<style>#below_tag_content_ifr {height:250px !important;}</style>'
+                        );
 
-				wp_editor($second_desc, 'below_tag_content', $settings);
-				?>
+        wp_editor($second_desc, 'below_tag_content', $settings);
+        ?>
 			</td>
 		</tr>
 <?php
-	}
+    }
 
-	public function save_metabox_on_product_tag_page($term_id, $tt_id = '', $taxonomy = '') {
-		if (isset($_POST['below_tag_content']) && 'product_tag' === $taxonomy) {
-			update_term_meta($term_id, 'below_tag_content', esc_attr($_POST['below_tag_content']));
-		}
-	}
+    public function add_custom_field_to_attr($term, $taxonomy) {
+        $below_attr_content = htmlspecialchars_decode(get_term_meta($term->term_id, 'below_attr_content', true));
+        $selected           = get_term_meta($term->term_id, 'prefix_suffixe', true);
+        $attr_value         = htmlspecialchars_decode(get_term_meta($term->term_id, 'attr_value', true));
+        ?>
+        
+		<tr class="form-field">
+			<th scope="row" valign="top"><label for="below_tag_content"><?php echo __('below_attr_content', 'ibc'); ?></label></th>
+			<td>
+				<?php
+
+                        $settings = array(
+                            'textarea_name' => 'below_attr_content',
+                            'value'         => $below_attr_content,
+                            'quicktags'     => array('buttons' => 'em,strong,link'),
+                            'tinymce'       => true,
+                            'editor_css'    => '<style>#below_attr_content_ifr {height:250px !important;}</style>'
+                        );
+
+        wp_editor($below_attr_content, 'below_attr_content', $settings);
+        ?>
+			</td>
+		</tr>
+        <tr class="form-field">
+            <th scope="row" valign="top"><label for="attr_value"><?php echo __("Préfixer le titre de l'archive par du texte", 'ibc'); ?></label></th>
+            <td><input type="text" name="attr_value" id="attr_value" placeholder="texte" value="<?php echo htmlspecialchars_decode($attr_value)?>"></td>
+        </tr>
+        <tr>
+            <th scope="row" valign="top"><label for="prefix_suffixe"><?php echo __("position du texte par rapport à l'attribut", 'ibc'); ?></th>
+            <td><select name="prefix_suffixe" id="prefix_suffixe">
+                <option value="prefix" <?php echo $selected == 'prefix' ? 'selected' : ''; ?>><?php echo __('avant', 'ibc'); ?></option>
+                <option value="suffix" <?php echo $selected == 'suffix' ? 'selected' : ''; ?>><?php echo __('après', 'ibc'); ?></option>
+            </select></td>
+        </tr>
+<?php
+    }
+
+    public function save_metabox_on_product_tag_page($term_id, $tt_id = '', $taxonomy = '') {
+        if (isset($_POST['below_tag_content']) && 'product_tag' === $taxonomy) {
+            update_term_meta($term_id, 'below_tag_content', esc_attr($_POST['below_tag_content']));
+        }
+    }
+
+    public function save_metabox_on_product_attr_page($term_id) {
+        if (isset($_POST['below_attr_content'])) {
+            update_term_meta($term_id, 'below_attr_content', esc_attr($_POST['below_attr_content']));
+        }
+        if (isset($_POST['attr_value'])) {
+            update_term_meta($term_id, 'attr_value', esc_attr($_POST['attr_value']));
+        }
+        if (isset($_POST['prefix_suffixe'])) {
+            update_term_meta($term_id, 'prefix_suffixe', esc_attr($_POST['prefix_suffixe']));
+        }
+    }
 }
