@@ -9,7 +9,7 @@
  * that starts the plugin.
  *
  * @link              http://example.com
- * @since             1.0.0
+ * @since             1.0.1
  * @package           IBC
  *
  * @wordpress-plugin
@@ -35,7 +35,7 @@ if ( ! defined('WPINC')) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('IBC_VERSION', '1.1.0');
+define('IBC_VERSION', '1.1.1');
 
 /**
  * The code that runs during plugin activation.

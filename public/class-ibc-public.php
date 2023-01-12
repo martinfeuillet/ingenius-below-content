@@ -11,7 +11,7 @@ class IBC_Public {
 
         // add_action('woocommerce_after_single_product_summary', array($this, 'add_below_content'), 11);
         add_action('woocommerce_after_main_content', array($this, 'add_below_content'), 11);
-        add_filter( 'woocommerce_page_title', array($this, 'change_title_of_woocommerce_page'), 10, 1 );
+        add_filter('woocommerce_page_title', array($this, 'change_title_of_woocommerce_page'), 10, 1);
 
         // add_action( 'pre_get_posts', array($this, 'display_custom_product_variation_image'));
         add_action('the_post', array($this, 'set_variableX_product_thumbnail'));
@@ -41,7 +41,7 @@ class IBC_Public {
 
     public function set_variableX_product_thumbnail($post) {
         $queried_object = get_queried_object();
-        if ( is_admin() && ! is_tax() && ! $queried_object->term_taxonomy_id) {
+        if (is_admin() && ! is_tax() && ! substr($queried_object->taxonomy, 0, 3) == 'pa_') {
             return;
         }
         $product = wc_get_product($post->ID);
@@ -52,10 +52,10 @@ class IBC_Public {
                 // get all attribute values
                 $product_attributes = $product->get_attributes();
                 foreach ($product_attributes as $name => $value) {
-                    if ($name == $queried_object->taxonomy && $value == $queried_object->name) {
+                    if ($name == $queried_object->taxonomy && $value == $queried_object->slug) {
                         $image_id = $product->get_image_id();
                         if ($image_id) {
-                            set_post_thumbnail( $post->ID, $image_id );
+                            set_post_thumbnail($post->ID, $image_id);
                         }
                     }
                 }
@@ -65,12 +65,12 @@ class IBC_Public {
 
     public function set_variable_product_thumbnail($post_id) {
         // Get the product variation ID
-        $variation_id = get_post_meta( $post_id, '_default_variation_id', true );
+        $variation_id = get_post_meta($post_id, '_default_variation_id', true);
         // Get the product variation image
-        $image = wp_get_attachment_image( $variation_id, 'thumbnail' );
+        $image = wp_get_attachment_image($variation_id, 'thumbnail');
 
         // Set the product variation image as the post thumbnail
-        set_post_thumbnail( $post_id, $image );
+        set_post_thumbnail($post_id, $image);
     }
 
     public function change_title_of_woocommerce_page($title) {
@@ -94,10 +94,10 @@ class IBC_Public {
             echo "<div class='below-tag-content'>" . $below_tag_content . '</div>';
         }
         // if we are on attribute archive
-        if (is_tax()) {
-            $term               = get_queried_object();
+        $term               = get_queried_object();
+        if (is_tax() && $term->taxonomy != 'product_tag' && $term->taxonomy != 'product_cat') {
             $below_attr_content = htmlspecialchars_decode(get_term_meta($term->term_id, 'below_attr_content', true));
-            echo "<div class='below-attr-content'>" . $below_attr_content . '</div>';
+            echo "<div class='below-woocommerce-category'>" . $below_attr_content . '</div>';
         }
     }
 
