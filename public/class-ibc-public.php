@@ -59,7 +59,7 @@ class IBC_Public {
         if (is_product_tag()) {
             $term              = get_queried_object();
             $below_tag_content = htmlspecialchars_decode(get_term_meta($term->term_id, 'below_tag_content', true));
-            echo "<div class='below-tag-content'>" . $below_tag_content . '</div>';
+            echo "<div class='below-woocommerce-category'>" . $below_tag_content . '</div>';
         }
         // if we are on attribute archive
         $term               = get_queried_object();
