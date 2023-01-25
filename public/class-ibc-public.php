@@ -29,7 +29,7 @@ class IBC_Public {
                 // get all attribute values
                 $product_attributes = $product->get_attributes();
                 foreach ($product_attributes as $name => $value) {
-                    if ($name == $queried_object->taxonomy && $value == $queried_object->slug) {
+                    if ($queried_object->taxonomy && $name == $queried_object->taxonomy && $value == $queried_object->slug) {
                         $image_id = $product->get_image_id();
                         if ($image_id) {
                             set_post_thumbnail($post->ID, $image_id);
