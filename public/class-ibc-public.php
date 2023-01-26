@@ -18,7 +18,7 @@ class IBC_Public {
     // change thumbnail of variable product to match with the selected attribute
     public function set_variable_product_thumbnail($post) {
         $queried_object = get_queried_object();
-        if (is_admin() && ! is_tax() && ! substr($queried_object->taxonomy, 0, 3) == 'pa_') {
+        if (is_admin() && ! is_tax() && (isset($queried_object->taxonomy) && ! substr($queried_object->taxonomy, 0, 3) == 'pa_')) {
             return;
         }
         $product = wc_get_product($post->ID);
