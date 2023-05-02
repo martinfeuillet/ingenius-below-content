@@ -29,16 +29,13 @@ class IBC_Admin
             </th>
             <td>
                 <?php
-                $settings = array(
-                    'textarea_name' => 'below_tag_content' ,
-                    'value'         => $second_desc ,
-                    'quicktags'     => array('buttons' => 'em,strong,link') ,
-                    'tinymce'       => true ,
-                    'editor_css'    => '<style>#below_tag_content_ifr {height:250px !important;}</style>'
-                );
-
-                wp_editor( $second_desc , 'below_tag_content' , $settings );
+                echo '<textarea name="below_tag_content" id="below_tag_content" rows="10" cols="50">' . esc_textarea( $second_desc ) . '</textarea>';
                 ?>
+                <script>
+                    tinymce.init({
+                        selector: "#below_tag_content",
+                    });
+                </script>
             </td>
         </tr>
         <?php
@@ -55,6 +52,7 @@ class IBC_Admin
         $below_attr_content = htmlspecialchars_decode( get_term_meta( $term->term_id , 'below_attr_content' , true ) );
         $selected           = get_term_meta( $term->term_id , 'prefix_suffixe' , true );
         $attr_value         = htmlspecialchars_decode( get_term_meta( $term->term_id , 'attr_value' , true ) );
+        $new_attr_title     = htmlspecialchars_decode( get_term_meta( $term->term_id , 'new_attr_title' , true ) );
         ?>
 
         <tr class="form-field">
@@ -62,34 +60,41 @@ class IBC_Admin
             </th>
             <td>
                 <?php
-
-                $settings = array(
-                    'textarea_name' => 'below_attr_content' ,
-                    'value'         => $below_attr_content ,
-                    'quicktags'     => array('buttons' => 'em,strong,link') ,
-                    'tinymce'       => true ,
-                    'editor_css'    => '<style>#below_attr_content_ifr {height:250px !important;}</style>'
-                );
-
-                wp_editor( $below_attr_content , 'below_attr_content' , $settings );
+                echo '<textarea name="below_attr_content" id="below_attr_content" rows="10" cols="50">' . esc_textarea( $below_attr_content ) . '</textarea>';
                 ?>
+                <script>
+                    tinymce.init({
+                        selector: "#below_attr_content",
+                    });
+                </script>
             </td>
         </tr>
         <tr class="form-field">
             <th scope="row"><label
-                        for="attr_value"><?php echo __( "Préfixer le titre de l'archive par du texte" , 'ibc' ); ?></label>
+                    for="attr_value"><?php echo __( "Préfixer le titre de l'archive par du texte" , 'ibc' ); ?></label>
             </th>
             <td><input type="text" name="attr_value" id="attr_value" placeholder="texte"
                        value="<?php echo htmlspecialchars_decode( $attr_value ) ?>"></td>
         </tr>
         <tr>
             <th scope="row"><label
-                        for="prefix_suffixe"><?php echo __( "position du texte par rapport à l'attribut" , 'ibc' ); ?>
+                    for="prefix_suffixe"><?php echo __( "position du texte par rapport à l'attribut" , 'ibc' ); ?>
             </th>
             <td><select name="prefix_suffixe" id="prefix_suffixe">
-                    <option value="prefix" <?php echo $selected == 'prefix' ? 'selected' : ''; ?>><?php echo __( 'avant' , 'ibc' ); ?></option>
-                    <option value="suffix" <?php echo $selected == 'suffix' ? 'selected' : ''; ?>><?php echo __( 'après' , 'ibc' ); ?></option>
+                    <option
+                        value="prefix" <?php echo $selected == 'prefix' ? 'selected' : ''; ?>><?php echo __( 'avant' , 'ibc' ); ?></option>
+                    <option
+                        value="suffix" <?php echo $selected == 'suffix' ? 'selected' : ''; ?>><?php echo __( 'après' , 'ibc' ); ?></option>
                 </select></td>
+        </tr>
+        <tr>
+            <th scope="row"><label
+                    for="prefix_suffixe"><?php echo __( "Remplacer le nom de l'archive,utile pour les liaisons masculin/feminin ou pour le singulier/pluriel, laisser vide pour ne rien changer" , 'ibc' ); ?>
+            </th>
+            <td>
+                <input type="text" name="new_attr_title" id="new_attr_title" placeholder="Nouveau nom"
+                       value="<?php echo htmlspecialchars_decode( $new_attr_title ) ?>">
+            </td>
         </tr>
         <?php
     }
@@ -104,6 +109,7 @@ class IBC_Admin
         if ( isset( $_POST['below_tag_content'] ) && 'product_tag' === $taxonomy ) {
             update_term_meta( $term_id , 'below_tag_content' , esc_attr( $_POST['below_tag_content'] ) );
         }
+
     }
 
     /**
@@ -120,5 +126,13 @@ class IBC_Admin
         if ( isset( $_POST['prefix_suffixe'] ) ) {
             update_term_meta( $term_id , 'prefix_suffixe' , esc_attr( $_POST['prefix_suffixe'] ) );
         }
+        if ( isset( $_POST['new_attr_title'] ) ) {
+            update_term_meta( $term_id , 'new_attr_title' , esc_attr( $_POST['new_attr_title'] ) );
+        }
+    }
+
+    public function enqueue_scripts() {
+        if ( isset( $_GET['taxonomy'] ) )
+            wp_enqueue_script( 'tinymce_js' , '//cdnjs.cloudflare.com/ajax/libs/tinymce/6.4.2/tinymce.min.js' , array() , "" , false );
     }
 }

@@ -12,37 +12,51 @@ class IBC_Public
 
         //&& isset( get_queried_object()->taxonomy ) && str_starts_with( get_queried_object()->taxonomy , 'pa_' )
         add_action( 'woocommerce_after_main_content' , array($this , 'add_below_content') , 10 );
-        add_action( 'the_post' , array($this , 'set_variable_product_thumbnail') );
+        add_filter( 'woocommerce_product_get_image_id' , array($this , 'set_variable_product_thumbnail') , 10 , 2 );
         add_filter( 'woocommerce_page_title' , array($this , 'change_title_of_woocommerce_page') , 10 , 1 );
+
 
     }
 
     /**
      * change thumbnail of variable product to match with the selected attribute
      * @param $post WP_Post the post object
-     * @return WP_Post|void
+     * @return WP_Post|void | string
      */
-    public function set_variable_product_thumbnail( WP_Post $post ) {
+    public function set_variable_product_thumbnail( $image_id , $product ) {
         if ( ! is_tax() ) {
-            return;
+            return $image_id;
         }
-        $product = wc_get_product( $post->ID );
-        if ( $product ) {
-            $current_products = $product->get_children();
-            foreach ( $current_products as $id ) {
-                $product = new WC_Product_Variation( $id );
-                // get all attribute values
-                $product_attributes = $product->get_attributes();
-                foreach ( $product_attributes as $name => $value ) {
-                    if ( get_queried_object()->taxonomy && $name == get_queried_object()->taxonomy && $value == get_queried_object()->slug ) {
-                        $image_id = $product->get_image_id();
-                        if ( $image_id ) {
-                            set_post_thumbnail( $post->ID , $image_id );
+
+        $queried_object = get_queried_object();
+
+        if ( ! $queried_object || ! isset( $queried_object->taxonomy ) || ! isset( $queried_object->slug ) ) {
+            return $image_id;
+        }
+
+        $taxonomy = $queried_object->taxonomy;
+        $slug     = $queried_object->slug;
+
+        if ( $product->is_type( 'variable' ) ) {
+            $children = $product->get_children();
+
+            foreach ( $children as $variation_id ) {
+                $variation            = wc_get_product( $variation_id );
+                $variation_attributes = $variation->get_attributes();
+
+                foreach ( $variation_attributes as $attribute_name => $attribute_value ) {
+                    if ( $attribute_name == $taxonomy && $attribute_value == $slug ) {
+                        $variation_image_id = $variation->get_image_id();
+
+                        if ( $variation_image_id ) {
+                            return $variation_image_id;
                         }
                     }
                 }
             }
         }
+
+        return $image_id;
     }
 
     /**
@@ -54,8 +68,9 @@ class IBC_Public
             return;
         }
         $query          = get_queried_object();
+        $title          = get_term_meta( $query->term_id , 'new_attr_title' , true ) ?? $title;
         $attr_value     = htmlspecialchars_decode( get_term_meta( $query->term_id , 'attr_value' , true ) );
-        $prefix_suffixe = get_term_meta( $query->term_id , 'prefix_suffixe' , true );
+        $prefix_suffixe = get_term_meta( $query->term_id , 'prefix_suffixe' , true ) ?? '';
         if ( $prefix_suffixe == 'prefix' ) {
             $title = ucfirst( $attr_value ) . ' ' . $title;
         } else {
