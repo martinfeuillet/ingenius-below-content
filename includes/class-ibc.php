@@ -153,7 +153,7 @@ class IBC
         $plugin_admin = new IBC_Admin( $this->get_IBC() , $this->get_version() );
 
 //		 $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
-        $this->loader->add_action( 'admin_enqueue_scripts' , $plugin_admin , 'enqueue_scripts' );
+//        $this->loader->add_action( 'admin_enqueue_scripts' , $plugin_admin , 'enqueue_scripts' );
     }
 
     /**

@@ -128,5 +128,4 @@ class IBC_Admin
             update_term_meta( $term_id , 'new_attr_title' , esc_attr( $_POST['new_attr_title'] ) );
         }
     }
-
 }
