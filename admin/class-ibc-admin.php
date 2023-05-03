@@ -33,7 +33,7 @@ class IBC_Admin
                 ?>
                 <script>
                     tinymce.init({
-                        selector: "#below_tag_content",
+                        selector: '#below_tag_content'
                     });
                 </script>
             </td>
@@ -64,7 +64,7 @@ class IBC_Admin
                 ?>
                 <script>
                     tinymce.init({
-                        selector: "#below_attr_content",
+                        selector: '#below_attr_content',
                     });
                 </script>
             </td>
@@ -132,7 +132,8 @@ class IBC_Admin
     }
 
     public function enqueue_scripts() {
-        if ( isset( $_GET['taxonomy'] ) )
-            wp_enqueue_script( 'tinymce_js' , '//cdnjs.cloudflare.com/ajax/libs/tinymce/6.4.2/tinymce.min.js' , array() , "" , false );
+        if ( isset( $_GET['taxonomy'] ) ) {
+            wp_enqueue_script( 'tinymce_js' , plugin_dir_url( __FILE__ ) . "tinymce/js/tinymce/tinymce.min.js" , array() , "" , false );
+        }
     }
 }
