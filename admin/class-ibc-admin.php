@@ -29,13 +29,12 @@ class IBC_Admin
             </th>
             <td>
                 <?php
-                echo '<textarea name="below_tag_content" id="below_tag_content" rows="10" cols="50">' . esc_textarea( $second_desc ) . '</textarea>';
+                wp_editor( $second_desc , 'below_tag_content' , array(
+                    'textarea_name' => 'below_tag_content' ,
+                    'textarea_rows' => 10 ,
+                    'textarea_cols' => 50 ,
+                ) );
                 ?>
-                <script>
-                    tinymce.init({
-                        selector: '#below_tag_content'
-                    });
-                </script>
             </td>
         </tr>
         <?php
@@ -60,13 +59,12 @@ class IBC_Admin
             </th>
             <td>
                 <?php
-                echo '<textarea name="below_attr_content" id="below_attr_content" rows="10" cols="50">' . esc_textarea( $below_attr_content ) . '</textarea>';
+                wp_editor( $below_attr_content , 'below_attr_content' , array(
+                    'textarea_name' => 'below_attr_content' ,
+                    'textarea_rows' => 10 ,
+                    'textarea_cols' => 50 ,
+                ) );
                 ?>
-                <script>
-                    tinymce.init({
-                        selector: '#below_attr_content',
-                    });
-                </script>
             </td>
         </tr>
         <tr class="form-field">
@@ -131,9 +129,4 @@ class IBC_Admin
         }
     }
 
-    public function enqueue_scripts() {
-        if ( isset( $_GET['taxonomy'] ) ) {
-            wp_enqueue_script( 'tinymce_js' , plugin_dir_url( __FILE__ ) . "tinymce/js/tinymce/tinymce.min.js" , array() , "" , false );
-        }
-    }
 }
