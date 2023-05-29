@@ -68,13 +68,15 @@ class IBC_Public
             return;
         }
         $query          = get_queried_object();
-        $title          = get_term_meta( $query->term_id , 'new_attr_title' , true ) ?? $title;
-        $attr_value     = htmlspecialchars_decode( get_term_meta( $query->term_id , 'attr_value' , true ) );
-        $prefix_suffixe = get_term_meta( $query->term_id , 'prefix_suffixe' , true ) ?? '';
-        if ( $prefix_suffixe == 'prefix' ) {
-            $title = ucfirst( $attr_value ) . ' ' . $title;
-        } else {
-            $title = ucfirst( $title ) . ' ' . $attr_value;
+        $title          = get_term_meta( $query->term_id , 'new_attr_title' , true ) ?: $title;
+        $attr_value     = htmlspecialchars_decode( get_term_meta( $query->term_id , 'attr_value' , true ) ) ?: null;
+        $prefix_suffixe = get_term_meta( $query->term_id , 'prefix_suffixe' , true ) ?: null;
+        if ( $attr_value ) {
+            if ( $prefix_suffixe == 'prefix' ) {
+                $title = ucfirst( $attr_value ) . ' ' . $title;
+            } else {
+                $title = ucfirst( $title ) . ' ' . $attr_value;
+            }
         }
         return $title;
     }
