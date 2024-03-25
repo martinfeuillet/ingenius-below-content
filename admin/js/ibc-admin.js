@@ -1,4 +1,7 @@
-(function( $ ) {
-	'use strict';
+(function ($) {
+    'use strict';
 
-})( jQuery );
+    //ready
+
+
+})(jQuery);

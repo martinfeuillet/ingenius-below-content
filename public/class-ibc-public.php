@@ -59,6 +59,7 @@ class IBC_Public
         return $image_id;
     }
 
+
     /**
      * @param $title string title of woocommerce page
      * @return string|void
@@ -67,6 +68,7 @@ class IBC_Public
         if ( ! is_tax() ) {
             return;
         }
+
         $query          = get_queried_object();
         $title          = get_term_meta( $query->term_id , 'new_attr_title' , true ) ?: $title;
         $attr_value     = htmlspecialchars_decode( get_term_meta( $query->term_id , 'attr_value' , true ) ) ?: null;
