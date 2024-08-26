@@ -125,14 +125,11 @@ class IBC_Public {
 			return;
 		}
 
-		$query = get_queried_object();
-		$title = get_term_meta( $query->term_id, 'new_attr_title', true ) ?: $title;
-		error_log( $title . ' title1' );
+		$query      = get_queried_object();
+		$title      = get_term_meta( $query->term_id, 'new_attr_title', true ) ?: $title;
 		$attr_value = htmlspecialchars_decode( get_term_meta( $query->term_id, 'attr_value', true ) ) ?: null;
-		error_log( $attr_value . ' attr_value' );
 
 		$prefix_suffixe = get_term_meta( $query->term_id, 'prefix_suffixe', true ) ?: null;
-		error_log( $prefix_suffixe . ' prefix_suffixe' );
 		if ( $attr_value ) {
 			if ( $prefix_suffixe == 'prefix' ) {
 				$title = ucfirst( $attr_value ) . ' ' . $title;
@@ -140,7 +137,6 @@ class IBC_Public {
 				$title = ucfirst( $title ) . ' ' . $attr_value;
 			}
 		}
-		error_log( $title );
 		return $title;
 	}
 
@@ -152,16 +148,19 @@ class IBC_Public {
 	 */
 	public function add_below_content(): void {
 		if ( is_product_tag() ) {
-			$term              = get_queried_object();
-			$below_tag_content = htmlspecialchars_decode( get_term_meta( $term->term_id, 'below_tag_content', true ) );
-			echo "<div class='below-woocommerce-category'>" . $below_tag_content . '</div>';
+			$term                        = get_queried_object();
+			$below_tag_content           = get_term_meta( $term->term_id, 'below_tag_content', true );
+			$below_tag_decoded_content   = htmlspecialchars_decode( $below_tag_content );
+			$below_tag_formatted_content = wpautop( nl2br( $below_tag_decoded_content ) );
+			echo "<div class='below-woocommerce-category'>" . $below_tag_formatted_content . '</div>';
 		}
-		// if we are on attribute archive
 		if ( is_tax() ) {
 			$term = get_queried_object();
 			if ( $term->taxonomy != 'product_tag' && $term->taxonomy != 'product_cat' ) {
-				$below_attr_content = htmlspecialchars_decode( get_term_meta( $term->term_id, 'below_attr_content', true ) );
-				echo "<div class='below-woocommerce-category'>" . $below_attr_content . '</div>';
+				$below_attr_content   = get_term_meta( $term->term_id, 'below_attr_content', true );
+				$decoded_attr_content = htmlspecialchars_decode( $below_attr_content );
+				$formatted_content    = wpautop( nl2br( $decoded_attr_content ) );
+				echo "<div class='below-woocommerce-category'>" . $formatted_content . '</div>';
 			}
 		}
 	}
