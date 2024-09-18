@@ -18,6 +18,7 @@ class IBC_Public {
 			remove_action( 'shoptimizer_before_content', 'shoptimizer_product_cat_banner', 15 );
 
 			add_action( 'shoptimizer_before_content', array( $this, 'custom_shoptimizer_product_cat_banner' ), 15 );
+			add_filter( 'single_term_title', array( $this, 'change_title_of_woocommerce_page_for_shoptimizer' ), 10, 1 );
 		}
 	}
 
@@ -115,24 +116,28 @@ class IBC_Public {
 		return $image_id;
 	}
 
+	/**
+	 * @param $title string title of woocommerce page
+	 * @return string|void
+	 */
+	public function change_title_of_woocommerce_page_for_shoptimizer( $title ) {
+		if ( ( is_product_category() || is_product_tag() ) && is_paged() ) {
+			if ( get_query_var( 'paged' ) > 1 ) {
+				$title .= ' - ' . sprintf( __( 'Page %s', 'woocommerce' ), max( 1, get_query_var( 'paged' ) ) );
+			}
+		}
+		return $title;
+	}
+
 
 	/**
 	 * @param $title string title of woocommerce page
 	 * @return string|void
 	 */
 	public function change_title_of_woocommerce_page( string $title ) {
-
-		if ( is_product_category() || is_product_tag() && is_paged() ) {
-			if ( get_query_var( 'paged' ) > 1 ) {
-				$title .= ' - ' . sprintf( __( 'Page %s', 'woocommerce' ), max( 1, get_query_var( 'paged' ) ) );
-			}
+		if ( ! is_tax() || is_product_category() || is_product_tag() ) {
 			return $title;
 		}
-
-		if ( ! is_tax() ) {
-			return;
-		}
-
 		$query      = get_queried_object();
 		$title      = get_term_meta( $query->term_id, 'new_attr_title', true ) ?: $title;
 		$attr_value = htmlspecialchars_decode( get_term_meta( $query->term_id, 'attr_value', true ) ) ?: null;
