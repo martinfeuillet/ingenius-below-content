@@ -121,6 +121,14 @@ class IBC_Public {
 	 * @return string|void
 	 */
 	public function change_title_of_woocommerce_page( string $title ) {
+
+		if ( is_product_category() || is_product_tag() && is_paged() ) {
+			if ( get_query_var( 'paged' ) > 1 ) {
+				$title .= ' - ' . sprintf( __( 'Page %s', 'woocommerce' ), max( 1, get_query_var( 'paged' ) ) );
+			}
+			return $title;
+		}
+
 		if ( ! is_tax() ) {
 			return;
 		}
@@ -137,6 +145,11 @@ class IBC_Public {
 				$title = ucfirst( $title ) . ' ' . $attr_value;
 			}
 		}
+
+		if ( is_paged() && get_query_var( 'paged' ) > 1 ) {
+			$title .= ' - ' . sprintf( __( 'Page %s', 'woocommerce' ), max( 1, get_query_var( 'paged' ) ) );
+		}
+
 		return $title;
 	}
 
