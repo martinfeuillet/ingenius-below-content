@@ -135,9 +135,15 @@ class IBC_Public {
 	 * @return string|void
 	 */
 	public function change_title_of_woocommerce_page( string $title ) {
-		if ( ! is_tax() || is_product_category() || is_product_tag() ) {
+
+		if ( $this->is_shoptimizer_theme() ) {
+			if ( ! is_tax() || is_product_category() || is_product_tag() ) {
+				return $title;
+			}
+		} elseif ( ! is_tax() ) {
 			return $title;
 		}
+
 		$query      = get_queried_object();
 		$title      = get_term_meta( $query->term_id, 'new_attr_title', true ) ?: $title;
 		$attr_value = htmlspecialchars_decode( get_term_meta( $query->term_id, 'attr_value', true ) ) ?: null;
