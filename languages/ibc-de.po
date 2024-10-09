@@ -1,23 +1,22 @@
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Ingenius Below Content\n"
-"POT-Creation-Date: 2024-10-10 01:09+0200\n"
-"PO-Revision-Date: 2024-10-10 01:09+0200\n"
+"POT-Creation-Date: 2024-10-10 00:57+0200\n"
+"PO-Revision-Date: 2024-10-10 01:03+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "X-Generator: Poedit 3.4.4\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: ingenius-below-content.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;"
+"esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 "X-Poedit-SearchPathExcluded-1: plugin-update-checker/vendor\n"
@@ -32,70 +31,73 @@ msgstr ""
 
 #: admin/class-ibc-admin.php:80
 msgid "Préfixer le titre de l'archive par du texte"
-msgstr ""
+msgstr "Stellen Sie dem Archivtitel Text voran"
 
 #: admin/class-ibc-admin.php:87
 msgid "position du texte par rapport à l'attribut"
-msgstr ""
+msgstr "Position des Textes relativ zum Attribut"
 
 #: admin/class-ibc-admin.php:91
 msgid "avant"
-msgstr ""
+msgstr "Vor"
 
 #: admin/class-ibc-admin.php:93
 msgid "après"
-msgstr ""
+msgstr "Nach"
 
 #: admin/class-ibc-admin.php:98
 msgid ""
 "Remplacer le nom de l'archive,utile pour les liaisons masculin/feminin ou "
 "pour le singulier/pluriel, laisser vide pour ne rien changer"
 msgstr ""
+"Ersetzen Sie den Namen des Archivs. Dies ist nützlich für männliche/"
+"weibliche Verbindungen oder für Singular/Plural. Lassen Sie das Feld "
+"leer, um nichts zu ändern"
 
 #: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:54
 msgid "View details"
-msgstr ""
+msgstr "Details anzeigen"
 
 #: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:77
 #, php-format
 msgid "More information about %s"
-msgstr ""
+msgstr "Mehr Informationen über %s"
 
 #: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:128
 msgid "Check for updates"
-msgstr ""
+msgstr "Auf Aktualisierungen prüfen"
 
 #: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:214
 #, php-format
 msgctxt "the plugin title"
 msgid "The %s plugin is up to date."
-msgstr ""
+msgstr "Das %s Plugin ist aktuell."
 
 #: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:216
 #, php-format
 msgctxt "the plugin title"
 msgid "A new version of the %s plugin is available."
-msgstr ""
+msgstr "Eine neue Version des Plugins %s ist verfügbar."
 
 #: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:218
 #, php-format
 msgctxt "the plugin title"
 msgid "Could not determine if updates are available for %s."
-msgstr ""
+msgstr "Konnte nicht prüfen, ob Updates für das Plugin %s verfügbar sind."
 
 #: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:224
 #, php-format
 msgid "Unknown update checker status \"%s\""
-msgstr ""
+msgstr "Unbekannter Status für Aktualisierungscheck \"%s\""
 
 #: plugin-update-checker/Puc/v4p13/Vcs/PluginUpdateChecker.php:100
 msgid "There is no changelog available."
-msgstr ""
+msgstr "Es steht kein Änderungsprotokoll zur Verfügung."
 
 #: public/class-ibc-public.php:126 public/class-ibc-public.php:161
 #, php-format
 msgid "Page %s"
-msgstr ""
+msgstr "Seite %s"
 
 #. Plugin Name of the plugin/theme
 msgid "Ingenius Below Content"

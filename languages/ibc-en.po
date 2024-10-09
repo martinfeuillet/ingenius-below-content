@@ -1,96 +1,99 @@
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Ingenius Below Content\n"
 "POT-Creation-Date: 2024-10-10 01:09+0200\n"
-"PO-Revision-Date: 2024-10-10 01:09+0200\n"
+"PO-Revision-Date: 2024-10-10 01:13+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: en_150\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "X-Generator: Poedit 3.4.4\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: ingenius-below-content.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;"
+"esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 "X-Poedit-SearchPathExcluded-1: plugin-update-checker/vendor\n"
 
 #: admin/class-ibc-admin.php:28
+#, fuzzy
 msgid "below_tag_content"
-msgstr ""
+msgstr "below_tag_content"
 
 #: admin/class-ibc-admin.php:62
+#, fuzzy
 msgid "below_attr_content"
-msgstr ""
+msgstr "below_attr_content"
 
 #: admin/class-ibc-admin.php:80
 msgid "Préfixer le titre de l'archive par du texte"
-msgstr ""
+msgstr "Prefix the archive title with text"
 
 #: admin/class-ibc-admin.php:87
 msgid "position du texte par rapport à l'attribut"
-msgstr ""
+msgstr "text position relative to attribute"
 
 #: admin/class-ibc-admin.php:91
 msgid "avant"
-msgstr ""
+msgstr "Before"
 
 #: admin/class-ibc-admin.php:93
 msgid "après"
-msgstr ""
+msgstr "After"
 
 #: admin/class-ibc-admin.php:98
 msgid ""
 "Remplacer le nom de l'archive,utile pour les liaisons masculin/feminin ou "
 "pour le singulier/pluriel, laisser vide pour ne rien changer"
 msgstr ""
+"Replace the name of the archive, useful for masculine/feminine "
+"connections or for singular/plural, leave blank to change nothing"
 
 #: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:54
 msgid "View details"
-msgstr ""
+msgstr "View details"
 
 #: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:77
-#, php-format
+#, fuzzy, php-format
 msgid "More information about %s"
-msgstr ""
+msgstr "More information about %s"
 
 #: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:128
 msgid "Check for updates"
-msgstr ""
+msgstr "Check for updates"
 
 #: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:214
-#, php-format
+#, fuzzy, php-format
 msgctxt "the plugin title"
 msgid "The %s plugin is up to date."
-msgstr ""
+msgstr "The %s plugin is up to date."
 
 #: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:216
-#, php-format
+#, fuzzy, php-format
 msgctxt "the plugin title"
 msgid "A new version of the %s plugin is available."
-msgstr ""
+msgstr "A new version of the %s plugin is available."
 
 #: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:218
-#, php-format
+#, fuzzy, php-format
 msgctxt "the plugin title"
 msgid "Could not determine if updates are available for %s."
-msgstr ""
+msgstr "Could not determine if updates are available for %s."
 
 #: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:224
-#, php-format
+#, fuzzy, php-format
 msgid "Unknown update checker status \"%s\""
-msgstr ""
+msgstr "Unknown update checker status “%s”"
 
 #: plugin-update-checker/Puc/v4p13/Vcs/PluginUpdateChecker.php:100
 msgid "There is no changelog available."
-msgstr ""
+msgstr "There is no changelog available."
 
 #: public/class-ibc-public.php:126 public/class-ibc-public.php:161
 #, php-format
@@ -98,21 +101,26 @@ msgid "Page %s"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
+#, fuzzy
 msgid "Ingenius Below Content"
-msgstr ""
+msgstr "Ingenius Below Content"
 
 #. Plugin URI of the plugin/theme
+#, fuzzy
 msgid "http://example.com/ibc-uri/"
-msgstr ""
+msgstr "http://example.com/ibc-uri/"
 
 #. Description of the plugin/theme
+#, fuzzy
 msgid "Ingenius plugin that allow below content on attributes and tags."
-msgstr ""
+msgstr "Ingenius plugin that allow below content on attributes and tags."
 
 #. Author of the plugin/theme
+#, fuzzy
 msgid "Ingenius"
-msgstr ""
+msgstr "Ingenius"
 
 #. Author URI of the plugin/theme
+#, fuzzy
 msgid "https://ingenius.agency/"
-msgstr ""
+msgstr "https://ingenius.agency/"

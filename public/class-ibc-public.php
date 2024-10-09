@@ -123,7 +123,7 @@ class IBC_Public {
 	public function change_title_of_woocommerce_page_for_shoptimizer( $title ) {
 		if ( ( is_product_category() || is_product_tag() ) && is_paged() ) {
 			if ( get_query_var( 'paged' ) > 1 ) {
-				$title .= ' - ' . sprintf( __( 'Page %s', 'woocommerce' ), max( 1, get_query_var( 'paged' ) ) );
+				$title .= ' - ' . sprintf( __( 'Page %s', 'ibc' ), max( 1, get_query_var( 'paged' ) ) );
 			}
 		}
 		return $title;
