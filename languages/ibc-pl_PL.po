@@ -1,0 +1,132 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ingenius Below Content\n"
+"POT-Creation-Date: 2024-10-10 01:09+0200\n"
+"PO-Revision-Date: 2024-10-10 02:02+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.4\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: ingenius-below-content.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;"
+"esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: plugin-update-checker/vendor\n"
+
+#: admin/class-ibc-admin.php:28
+#, fuzzy
+msgid "below_tag_content"
+msgstr "below_tag_content"
+
+#: admin/class-ibc-admin.php:62
+#, fuzzy
+msgid "below_attr_content"
+msgstr "below_attr_content"
+
+#: admin/class-ibc-admin.php:80
+#, fuzzy
+msgid "Préfixer le titre de l'archive par du texte"
+msgstr "Popraw tytuł archiwum na tekst"
+
+#: admin/class-ibc-admin.php:87
+#, fuzzy
+msgid "position du texte par rapport à l'attribut"
+msgstr "pozycja tekstu w stosunku do atrybutu"
+
+#: admin/class-ibc-admin.php:91
+msgid "avant"
+msgstr "Zanim"
+
+#: admin/class-ibc-admin.php:93
+msgid "après"
+msgstr "Po"
+
+#: admin/class-ibc-admin.php:98
+#, fuzzy
+msgid ""
+"Remplacer le nom de l'archive,utile pour les liaisons masculin/feminin ou "
+"pour le singulier/pluriel, laisser vide pour ne rien changer"
+msgstr ""
+"Zastępowanie nazwy archiwum, przydatne w przypadku powiązań mężczyzna/"
+"kobieta lub singiel/pluriel, pozostawienie widocznej nazwy bez zmiany"
+
+#: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:54
+msgid "View details"
+msgstr "Pokaż szczegóły"
+
+#: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:77
+#, php-format
+msgid "More information about %s"
+msgstr "Więcej informacji o %s"
+
+#: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:128
+msgid "Check for updates"
+msgstr "Sprawdź aktualizacje"
+
+#: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:214
+#, php-format
+msgctxt "the plugin title"
+msgid "The %s plugin is up to date."
+msgstr "Wtyczka %s jest aktualna."
+
+#: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:216
+#, php-format
+msgctxt "the plugin title"
+msgid "A new version of the %s plugin is available."
+msgstr "Nowa wersja wtyczki %s jest dostępna."
+
+#: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:218
+#, php-format
+msgctxt "the plugin title"
+msgid "Could not determine if updates are available for %s."
+msgstr "Nie można ustalić, czy aktualizacje są dostępne dla %s."
+
+#: plugin-update-checker/Puc/v4p13/Plugin/Ui.php:224
+#, php-format
+msgid "Unknown update checker status \"%s\""
+msgstr "Nieznany stan sprawdzania aktualizacji \" %s\""
+
+#: plugin-update-checker/Puc/v4p13/Vcs/PluginUpdateChecker.php:100
+msgid "There is no changelog available."
+msgstr "Dziennik zmian jest niedostępny."
+
+#: public/class-ibc-public.php:126 public/class-ibc-public.php:161
+#, php-format
+msgid "Page %s"
+msgstr "Strona %s"
+
+#. Plugin Name of the plugin/theme
+#, fuzzy
+msgid "Ingenius Below Content"
+msgstr "Ingenius Poniżej Zawartość"
+
+#. Plugin URI of the plugin/theme
+#, fuzzy
+msgid "http://example.com/ibc-uri/"
+msgstr "http://example.com/ibc-uri/"
+
+#. Description of the plugin/theme
+#, fuzzy
+msgid "Ingenius plugin that allow below content on attributes and tags."
+msgstr ""
+"Wtyczka Ingenius umożliwiająca umieszczanie treści poniżej atrybutów i "
+"tagów."
+
+#. Author of the plugin/theme
+#, fuzzy
+msgid "Ingenius"
+msgstr "Ingenius"
+
+#. Author URI of the plugin/theme
+#, fuzzy
+msgid "https://ingenius.agency/"
+msgstr "https://ingenius.agency/"
