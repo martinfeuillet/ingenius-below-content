@@ -45,8 +45,17 @@
         var attribute = ibc_variation_data.attribute;
         var term = ibc_variation_data.term;
 
-        // Remove 'pa_' prefix for the select element name
-        var selectName = attribute.replace('pa_', '');
+        // Check for YITH WooCommerce Color swatches first
+        var yithColorSwatch = $('.select_box.' + attribute + ' .select_option[data-value="' + term + '"]');
+        if (yithColorSwatch.length > 0) {
+            // Remove selected class from all options in this attribute group
+            $('.select_box.' + attribute + ' .select_option').removeClass('selected');
+            // Add selected class to the matching option
+            yithColorSwatch.addClass('selected').trigger('click');
+            return;
+        }
+
+        // Fallback to regular select dropdowns
         var selectElement = $('select[name="attribute_' + attribute + '"], select[data-attribute_name="attribute_' + attribute + '"]');
 
         if (selectElement.length > 0) {
@@ -80,6 +89,12 @@
         var radioButton = $('input[name="attribute_' + attribute + '"][value="' + term + '"]');
         if (radioButton.length > 0) {
             radioButton.prop('checked', true).trigger('change');
+        }
+
+        // Check for other color swatch plugins (general approach)
+        var colorSwatch = $('[data-attribute="' + attribute + '"][data-value="' + term + '"], [data-attr_name="attribute_' + attribute + '"][data-value="' + term + '"]');
+        if (colorSwatch.length > 0) {
+            colorSwatch.trigger('click');
         }
 
         // Trigger variation selection
