@@ -44,6 +44,9 @@ class IBC_Public {
 		add_action( 'woocommerce_after_main_content', array( $this, 'add_below_content' ), 10 );
 		add_filter( 'woocommerce_product_get_image_id', array( $this, 'set_variable_product_thumbnail' ), 10, 2 );
 		add_filter( 'woocommerce_page_title', array( $this, 'change_title_of_woocommerce_page' ), 10, 1 );
+		add_filter( 'woocommerce_loop_product_link', array( $this, 'add_category_params_to_product_link' ), 10, 2 );
+		add_filter( 'post_link', array( $this, 'add_category_params_to_product_link' ), 10, 2 );
+		add_filter( 'post_type_link', array( $this, 'add_category_params_to_product_link' ), 10, 2 );
 
 		if ( $this->is_shoptimizer_theme() ) {
 			remove_action( 'shoptimizer_before_content', 'shoptimizer_product_cat_banner', 15 );
@@ -77,7 +80,7 @@ class IBC_Public {
 				$term = get_queried_object();
 
 				if ( shoptimizer_is_acf_activated() ) {
-					$categorybanner = function_exists( 'get_field' ) ? get_field( 'category_banner', $term ) : ''; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound,PHPCompatibility.FunctionUse.NewFunctions.get_fieldFound
+					$categorybanner = function_exists( 'get_field' ) ? get_field( 'category_banner', $term ) : ''; // phpcs:ignore
 				} else {
 					$categorybanner = '';
 				}
@@ -311,5 +314,100 @@ class IBC_Public {
 	 */
 	public function enqueue_styles(): void {
 		wp_enqueue_style( $this->ibc, plugin_dir_url( __FILE__ ) . 'css/ibc-public.css', array(), $this->version, 'all' );
+	}
+
+	/**
+	 * Register the JavaScript for the public-facing side of the site.
+	 */
+	public function enqueue_scripts(): void {
+		wp_enqueue_script( $this->ibc, plugin_dir_url( __FILE__ ) . 'js/ibc-public.js', array( 'jquery' ), $this->version, false );
+
+		// Pass category attribute data to JavaScript on category pages.
+		if ( is_product_category() ) {
+			$term = get_queried_object();
+			if ( $term && isset( $term->term_id ) ) {
+				$category_attributes = get_term_meta( $term->term_id, 'category_attributes', true );
+				if ( ! empty( $category_attributes ) && is_array( $category_attributes ) ) {
+					$selected_attribute = array_key_first( $category_attributes );
+					$attribute_data     = $category_attributes[ $selected_attribute ];
+
+					if ( ! empty( $attribute_data['terms'] ) ) {
+						$selected_term = $attribute_data['terms'][0];
+
+						wp_localize_script(
+							$this->ibc,
+							'ibc_category_data',
+							array(
+								'attribute' => $selected_attribute,
+								'term'      => $selected_term,
+							)
+						);
+					}
+				}
+			}
+		}
+
+		// Pass category attribute data to JavaScript on product pages.
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended
+		if ( is_product() && isset( $_GET['ibc_attr'] ) && isset( $_GET['ibc_term'] ) ) {
+			$attribute_name = sanitize_text_field( wp_unslash( $_GET['ibc_attr'] ) );
+			$term_slug      = sanitize_text_field( wp_unslash( $_GET['ibc_term'] ) );
+			// phpcs:enable WordPress.Security.NonceVerification.Recommended
+
+			wp_localize_script(
+				$this->ibc,
+				'ibc_variation_data',
+				array(
+					'attribute' => $attribute_name,
+					'term'      => $term_slug,
+				)
+			);
+		}
+	}
+
+	/**
+	 * Add category attribute parameters to product links on category pages.
+	 *
+	 * @param string     $link    Product link.
+	 * @param WC_Product $product Product object.
+	 * @return string
+	 */
+	public function add_category_params_to_product_link( $link, $product ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
+		// Only add parameters on category pages.
+		if ( ! is_product_category() ) {
+			return $link;
+		}
+
+		$term = get_queried_object();
+		if ( ! $term || ! isset( $term->term_id ) ) {
+			return $link;
+		}
+
+		// Get category attribute settings.
+		$category_attributes = get_term_meta( $term->term_id, 'category_attributes', true );
+		if ( empty( $category_attributes ) || ! is_array( $category_attributes ) ) {
+			return $link;
+		}
+
+		// Get the first (and only) attribute and term.
+		$selected_attribute = array_key_first( $category_attributes );
+		$attribute_data     = $category_attributes[ $selected_attribute ];
+
+		if ( empty( $attribute_data['terms'] ) ) {
+			return $link;
+		}
+
+		$selected_term = $attribute_data['terms'][0];
+
+		// Add parameters to the link.
+		$link = add_query_arg(
+			array(
+				'ibc_attr' => $selected_attribute,
+				'ibc_term' => $selected_term,
+			),
+			$link
+		);
+
+		return $link;
 	}
 }
