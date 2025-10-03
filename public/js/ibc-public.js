@@ -13,7 +13,7 @@
             // Wait for WooCommerce variation scripts to load
             setTimeout(function () {
                 selectVariationFromCategory();
-            }, 500);
+            }, 1500);
         }
     });
 
@@ -45,21 +45,51 @@
         var attribute = ibc_variation_data.attribute;
         var term = ibc_variation_data.term;
 
-        // Check for YITH WooCommerce Color swatches first
-        var yithColorSwatch = $('.select_box.' + attribute + ' .select_option[data-value="' + term + '"]');
-        if (yithColorSwatch.length > 0) {
-            // Remove selected class from all options in this attribute group
-            $('.select_box.' + attribute + ' .select_option').removeClass('selected');
-            // Add selected class to the matching option
-            yithColorSwatch.addClass('selected').trigger('click');
-            return;
+
+        var yithSelectElement = $('select[name="attribute_' + attribute + '"].yith_wccl_custom, select[data-attribute_name="attribute_' + attribute + '"].yith_wccl_custom, select#' + attribute + '.yith_wccl_custom');
+
+        if (yithSelectElement.length > 0) {
+            console.log('Found YITH select element:', yithSelectElement);
+
+            var optionFound = false;
+
+            yithSelectElement.find('option').each(function () {
+                var optionValue = $(this).val();
+                if (optionValue === term) {
+                    console.log('Exact match found, selecting option:', optionValue);
+                    yithSelectElement.val(term).trigger('change');
+                    optionFound = true;
+                    return false; // Break the loop
+                }
+            });
+
+            if (!optionFound) {
+                yithSelectElement.find('option').each(function () {
+                    var optionValue = $(this).val();
+                    var optionText = $(this).text().toLowerCase();
+                    var termLower = term.toLowerCase();
+
+                    if (optionValue.includes(term) || optionText.includes(termLower) ||
+                        termLower.includes(optionValue) || termLower.includes(optionText)) {
+                        console.log('Partial match found, selecting option:', optionValue);
+                        yithSelectElement.val(optionValue).trigger('change');
+                        optionFound = true;
+                        return false; // Break the loop
+                    }
+                });
+            }
+
+            if (optionFound) {
+                $('.variations_form').trigger('woocommerce_variation_select_change');
+                $('.variations_form').trigger('check_variations');
+                return;
+            }
         }
 
         // Fallback to regular select dropdowns
         var selectElement = $('select[name="attribute_' + attribute + '"], select[data-attribute_name="attribute_' + attribute + '"]');
 
         if (selectElement.length > 0) {
-            // Try to find and select the matching option
             var optionFound = false;
 
             selectElement.find('option').each(function () {
