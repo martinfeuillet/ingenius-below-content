@@ -349,20 +349,25 @@ class IBC_Public {
 
 		// Pass category attribute data to JavaScript on product pages.
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended
-		if ( is_product() && isset( $_GET['ibc_attr'] ) && isset( $_GET['ibc_term'] ) ) {
-			$attribute_name = sanitize_text_field( wp_unslash( $_GET['ibc_attr'] ) );
-			$term_slug      = sanitize_text_field( wp_unslash( $_GET['ibc_term'] ) );
-			// phpcs:enable WordPress.Security.NonceVerification.Recommended
+		if ( is_product() ) {
+			foreach ( $_GET as $param_key => $param_value ) {
+				if ( strpos( $param_key, 'attribute_' ) === 0 ) {
+					$attribute_name = sanitize_text_field( $param_key );
+					$term_slug      = sanitize_text_field( wp_unslash( $param_value ) );
 
-			wp_localize_script(
-				$this->ibc,
-				'ibc_variation_data',
-				array(
-					'attribute' => $attribute_name,
-					'term'      => $term_slug,
-				)
-			);
+					wp_localize_script(
+						$this->ibc,
+						'ibc_variation_data',
+						array(
+							'attribute' => $attribute_name,
+							'term'      => $term_slug,
+						)
+					);
+					break;
+				}
+			}
 		}
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 	}
 
 	/**
@@ -399,11 +404,10 @@ class IBC_Public {
 
 		$selected_term = $attribute_data['terms'][0];
 
-		// Add parameters to the link.
+		// Add parameters to the link using single parameter format.
 		$link = add_query_arg(
 			array(
-				'ibc_attr' => $selected_attribute,
-				'ibc_term' => $selected_term,
+				'attribute_' . $selected_attribute => $selected_term,
 			),
 			$link
 		);

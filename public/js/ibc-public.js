@@ -28,9 +28,10 @@
                 var href = $link.attr('href');
 
                 if (href && href.indexOf('/product/') !== -1) {
-                    if (href.indexOf('ibc_attr=') === -1) {
+                    // Check if the attribute parameter is already present
+                    if (href.indexOf(ibc_category_data.attribute + '=') === -1) {
                         var separator = href.indexOf('?') !== -1 ? '&' : '?';
-                        var newHref = href + separator + 'ibc_attr=' + encodeURIComponent(ibc_category_data.attribute) + '&ibc_term=' + encodeURIComponent(ibc_category_data.term);
+                        var newHref = href + separator + encodeURIComponent(ibc_category_data.attribute) + '=' + encodeURIComponent(ibc_category_data.term);
                         $link.attr('href', newHref);
                     }
                 }
