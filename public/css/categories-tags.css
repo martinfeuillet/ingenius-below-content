@@ -1,0 +1,42 @@
+.ibc-category-tag {
+    position: absolute;
+    bottom: 4px;
+    left: 5px;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 5px 10px;
+    border-radius: 11px;
+    font-size: 8px;
+    font-weight: 600;
+    z-index: 10;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Inline style for single product page categories */
+.ibc-categories-container .ibc-category-tag {
+    position: static;
+    display: inline-block;
+    margin: 2px 5px 2px 0;
+    text-decoration: none;
+    font-size: 9px;
+}
+
+.ibc-categories-container .ibc-category-tag:hover {
+    background-color: #333333;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.woocommerce ul.products li.product .woocommerce-loop-product__link {
+    position: relative;
+    display: block;
+}
+
+.woocommerce ul.products li.product {
+    position: relative;
+}
+
+.ibc-categories-container {
+    margin-top: 14px;
+}

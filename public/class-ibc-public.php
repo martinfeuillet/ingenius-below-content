@@ -54,6 +54,8 @@ class IBC_Public {
 			add_action( 'shoptimizer_before_content', array( $this, 'custom_shoptimizer_product_cat_banner' ), 15 );
 			add_filter( 'single_term_title', array( $this, 'change_title_of_woocommerce_page_for_shoptimizer' ), 10, 1 );
 		}
+
+		$this->init_categories_tags();
 	}
 
 	/**
@@ -63,6 +65,16 @@ class IBC_Public {
 	 */
 	public function is_shoptimizer_theme(): bool {
 		return wp_get_theme()->get( 'Name' ) === 'Shoptimizer' || wp_get_theme()->get( 'Template' ) === 'shoptimizer';
+	}
+
+	/**
+	 * Initialize categories-tags functionality
+	 *
+	 * @return void
+	 */
+	private function init_categories_tags(): void {
+		require_once plugin_dir_path( __FILE__ ) . 'classes/class-ibc-categories-tags.php';
+		new IBC_Categories_Tags( $this->ibc, $this->version );
 	}
 
 	/**
