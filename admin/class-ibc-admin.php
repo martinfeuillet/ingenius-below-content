@@ -41,6 +41,9 @@ class IBC_Admin {
 		// Enqueue admin scripts and styles.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
 		add_action( 'wp_ajax_get_attribute_terms', array( $this, 'ajax_get_attribute_terms' ) );
+
+		// Register below_attr_content in the REST API for all product attribute taxonomies.
+		add_action( 'rest_api_init', array( $this, 'register_rest_fields' ) );
 	}
 
 
@@ -374,6 +377,36 @@ class IBC_Admin {
 		}
 		if ( isset( $_POST['new_attr_title'] ) ) { // phpcs:ignore
 			update_term_meta( $term_id, 'new_attr_title', esc_attr( $_POST['new_attr_title'] ) ); // phpcs:ignore
+		}
+	}
+
+	/**
+	 * Register below_attr_content in the REST API for all WooCommerce product attribute taxonomies.
+	 */
+	public function register_rest_fields(): void {
+		if ( ! function_exists( 'wc_get_attribute_taxonomies' ) ) {
+			return;
+		}
+
+		$attribute_taxonomies = wc_get_attribute_taxonomies();
+
+		foreach ( $attribute_taxonomies as $taxonomy ) {
+			$taxonomy_name = wc_attribute_taxonomy_name( $taxonomy->attribute_name );
+
+			register_rest_field(
+				$taxonomy_name,
+				'below_attr_content',
+				array(
+					'get_callback' => function ( $term ) {
+						return htmlspecialchars_decode( get_term_meta( $term['id'], 'below_attr_content', true ) );
+					},
+					'schema'       => array(
+						'description' => 'Below attribute content',
+						'type'        => 'string',
+						'context'     => array( 'view', 'edit' ),
+					),
+				)
+			);
 		}
 	}
 }
