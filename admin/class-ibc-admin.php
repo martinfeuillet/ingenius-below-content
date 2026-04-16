@@ -397,10 +397,13 @@ class IBC_Admin {
 				$taxonomy_name,
 				'below_attr_content',
 				array(
-					'get_callback' => function ( $term ) {
+					'get_callback'    => function ( $term ) {
 						return htmlspecialchars_decode( get_term_meta( $term['id'], 'below_attr_content', true ) );
 					},
-					'schema'       => array(
+					'update_callback' => function ( $value, $term ) {
+						update_term_meta( $term->term_id, 'below_attr_content', wp_kses_post( $value ) );
+					},
+					'schema'          => array(
 						'description' => 'Below attribute content',
 						'type'        => 'string',
 						'context'     => array( 'view', 'edit' ),
